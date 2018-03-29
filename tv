@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Selection menu items goes here
-SELECTION="ARD Tagesschau24 ZDF ZDF_neo ZDFinfo ARTE Phoenix quit"
+SELECTION="ARD Tagesschau24 ARD_one ZDF ZDF_neo ZDFinfo ARTE Phoenix quit"
 
 select options in $SELECTION; do
 
@@ -11,6 +11,9 @@ if [ "$options" = "ARD" ]; then
 
 elif [ "$options" = "Tagesschau24" ]; then
 	mpv 'http://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/index_3776_av-p.m3u8?sd=10&rebase=on' -title Tagesschau24 && exit
+
+elif [ "$options" = "ARD_one" ]; then
+	mpv 'http://onelivestream-lh.akamaihd.net/i/one_livestream@568814/index_7_av-p.m3u8' -title ARD_one && exit
 
 elif [ "$options" = "ZDF" ]; then
     mpv 'https://zdf1314-lh.akamaihd.net/i/de14_v1@392878/master.m3u8' -title ZDF && exit
