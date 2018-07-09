@@ -7,7 +7,7 @@ select options in $SELECTION; do
 
 # here using the if statements you can perform the required  operation
 if [ "$options" = "ARD" ]; then
-    mpv 'http://live-ut-lh.daserste.de/i/daserste_ut_de@300832/index_1_av-b.m3u8?sd=10&rebase=on' -title ARD && exit
+    mpv 'https://derste247livede.akamaized.net/hls/live/658317/daserste_de/master.m3u8' -title ARD && exit
 
 elif [ "$options" = "Tagesschau24" ]; then
 	mpv 'http://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/index_3776_av-p.m3u8?sd=10&rebase=on' -title Tagesschau24 && exit
