@@ -1,0 +1,15 @@
+#!/bin/bash
+IP="192.168.1.221" #replace with milighthub IP
+case "$2" in
+	off) curl --data-binary '{"status":"false"}' -X PUT http://$IP/gateways/0x1/rgbw/$1 true% ;;	
+	on) curl --data-binary '{"status":"true"}' -X PUT http://$IP/gateways/0x1/rgbw/$1 true% ;;	
+	night) curl --data-binary '{"command":"night_mode"}' -X PUT http://$IP/gateways/0x1/rgbw/$1 true% ;;	
+	hue) com="curl --data-binary '{\"status\":\"on\",\"hue\":$3,\"level\":$4}' -X PUT http://$IP/gateways/0x1/rgbw/$1 true% "
+eval $com ;; 
+	level) com="curl --data-binary '{\"level\":$3}' -X PUT http://$IP/gateways/0x1/rgbw/$1"
+eval $com ;; 
+	white)  curl --data-binary '{"command":"set_white"}' -X PUT http://$IP/gateways/0x1/rgbw/$1 true% ;;
+	red) curl --data-binary '{"status":"on","hue":0,"level":100}' -X PUT http://$IP/gateways/0x1/rgbw/$1 true% ;;
+	green) curl --data-binary '{"status":"on","hue":120,"level":100}' -X PUT http://$IP/gateways/0x1/rgbw/$1 true% ;;
+	blue) curl --data-binary '{"status":"on","hue":240,"level":100}' -X PUT http://$IP/gateways/0x1/rgbw/$1 true% ;;
+esac
