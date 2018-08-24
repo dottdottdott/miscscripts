@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /tmp
+adress=$(wget -q -O- 'https://www.aldi-nord.de/magazine.html' | grep "ALDI Aktuell" -B4 | grep pdf | cut -d'"' -f2)
+wget "https://www.aldi-nord.de$adress"
+pdffile=$(echo $adress | cut -d'/' -f8) 
+mupdf $pdffile && rm $pdffile

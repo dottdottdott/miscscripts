@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /tmp
+adress=$(wget -q -O- 'https://www.travel-free.cz/angebote.html' | grep "Angebote als PDF" | cut -d'"' -f2)
+wget "https://www.travel-free.cz$adress"
+pdffile=$(echo $adress | cut -d'/' -f4) 
+mupdf $pdffile && rm $pdffile

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /tmp
+adress=$(wget -q -O- 'https://www.thomas-philipps.de/Prospekt' | grep "als PDF" | cut -d'"' -f2 | head -1)
+wget "https://www.thomas-philipps.de$adress"
+pdffile=$(echo $adress | cut -d'/' -f3) 
+mupdf $pdffile && rm $pdffile
