@@ -1,0 +1,18 @@
+#!/bin/bash 
+
+# date: 2018-08-29 - dott
+# description: download and display latest Freie Presse Chemnitz
+
+pdfviewer=mupdf
+fpuser='userename-here'
+fppw='password-here'
+
+cd /tmp
+curl --cookie-jar fpc -X POST -F "loginName=$fpuser" -F "password=$fppw" -F 'submit=Anmelden' -F '_is=1' --output /dev/null https://www.freiepresse.de/profil/login
+curl --location --cookie-jar fpcb --cookie fpc --output epaper.html -e https://www.freiepresse.de/profil https://www.freiepresse.de/profil/epaper
+#link=$(cat epaper.html | grep 'href="/epaper/chemnitz' | head -n1 | cut -d'"' -f2)
+#curl --location --cookie fpcb --output epaper2.html -e https://www.freiepresse.de/profil/epaper https://e-paper.freiepresse.de$link
+number=$(cat epaper.html | grep '"Chemnitzer Zeitung"' | cut -d'"' -f2 | cut -d'/' -f3)
+curl --location --cookie fpcb --output $(date +%Y-%m-%d)-freie_presse.pdf  https://e-paper.freiepresse.de/epaper/download/$number
+$pdfviewer $(date +%Y-%m-%d)-freie_presse.pdf
+rm fpc fpcb epaper.html $(date +%Y-%m-%d)-freie_presse.pdf
