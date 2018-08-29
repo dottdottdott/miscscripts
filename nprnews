@@ -1,3 +1,0 @@
-#!/bin/bash
-
-mpv 'https://www.npr.org/rss/podcast.php?id=500005'  
