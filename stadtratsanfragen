@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# date: 2018-08-30 - dott
+# discription: download and show Ratsanfragen from Chemnitz
+
+wget -q -O- http://session-bi.stadt-chemnitz.de/ag0041.php | sed 's/smcrecherchetitle/\nsmcrecherchetitle/g' |grep smcrecherchetitle | grep -v nodo-- > /tmp/stadtratanfragen
+
+while read line; do
+name=$(echo $line | cut -d':' -f3 | cut -d'"' -f1 | recode html..utf8 | cut -c 1-75)
+fraktion=$(echo $line | cut -d':' -f4 | awk -F '&nbsp;' '{print $1;}' | cut -d' ' -f3- | recode html..utf8)
+echo ";$fraktion;$name" >>/tmp/anfragen
+done < /tmp/stadtratanfragen
+cat -b /tmp/anfragen | column -t -s';'
+read -p "Nummer der Anfrage: " input
+file=$(cat -b /tmp/stadtratanfragen | grep "[[:blank:]]$input[[:blank:]]" | cut -d'"' -f51 | recode html..utf8 | grep getfile)
+wget -q  http://session-bi.stadt-chemnitz.de/$file -O /tmp/out.pdf
+mupdf /tmp/out.pdf
+rm /tmp/anfragen
+rm /tmp/stadtratsanfragen
+rm /tmp/out.pdf
