@@ -12,7 +12,7 @@ echo ";$fraktion;$name" >>/tmp/anfragen
 done < /tmp/stadtratanfragen
 cat -b /tmp/anfragen | column -t -s';'
 read -p "Nummer der Anfrage: " input
-file=$(cat -b /tmp/stadtratanfragen | grep "[[:blank:]]$input[[:blank:]]" | cut -d'"' -f51 | recode html..utf8 | grep getfile)
+file=$(cat -b /tmp/stadtratanfragen | grep "[[:blank:]]$input[[:blank:]]" | cut -d'"' -f61 | recode html..utf8 | grep getfile)
 wget -q  http://session-bi.stadt-chemnitz.de/$file -O /tmp/out.pdf
 mupdf /tmp/out.pdf
 rm /tmp/anfragen
