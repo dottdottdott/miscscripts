@@ -1,5 +1,7 @@
 #! /bin/bash
-# quickly add notes to a file
+
+# date: 2018-09-03 - dott
+# description: quick way to make notes
 
 notefile="/home/dott/docs/quicknotes.txt"
 date="1"

@@ -16,5 +16,5 @@ file=$(cat -b /tmp/stadtratanfragen | grep "[[:blank:]]$input[[:blank:]]" | cut 
 wget -q  http://session-bi.stadt-chemnitz.de/$file -O /tmp/out.pdf
 mupdf /tmp/out.pdf
 rm /tmp/anfragen
-rm /tmp/stadtratsanfragen
+rm /tmp/stadtratanfragen
 rm /tmp/out.pdf
