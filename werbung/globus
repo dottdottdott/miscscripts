@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /tmp
+week=$(date +%V)
+wget -q  https://ofbt.globus.de/faltblatt_online/aktuelle_woche/che/ressources/pdfs/Faltblatt_KW$week.pdf
+mupdf Faltblatt_KW$week.pdf
+rm Faltblatt_KW$week.pdf
