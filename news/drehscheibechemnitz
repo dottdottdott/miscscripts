@@ -1,0 +1,13 @@
+#!/bin/bash
+
+wget -q -O- https://www.sachsen-fernsehen.de/mediathek/kategorie/chemnitz-fernsehen/drehscheibe-chemnitz/ | grep itemprop | grep href > /tmp/drehc
+
+while read line; do
+dsfolgen="Drehscheibe vom $(echo $line | cut -d '"' -f3 | cut -d' ' -f6-7)"
+echo ";$dsfolgen" >> /tmp/dslist
+done < /tmp/drehc
+cat -b /tmp/dslist | column -t -s';'
+rm /tmp/dslist
+read -p "Nummer der Folge: " input
+dsfolge=$(cat /tmp/drehc | sed "$input q;d" | cut -d '"' -f6)
+mpv $(wget -q -O- $dsfolge | grep videojs-player-container | cut -d'"' -f22)
