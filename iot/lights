@@ -1,0 +1,16 @@
+#!/bin/bash
+IP="192.168.1.221" #replace with milighthub IP
+GROUP="0x1"
+case "$2" in
+	off) curl --data-binary '{"status":"off"}' -H 'Content-Type: application/json' -X PUT http://$IP/gateways/$GROUP/rgbw/$1  ;;	
+	on) curl --data-binary '{"status":"on"}' -H 'Content-Type: application/json' -X PUT http://$IP/gateways/$GROUP/rgbw/$1  ;;	
+	night) curl --data-binary '{"command":"night_mode"}' -H 'Content-Type: application/json' -X PUT http://$IP/gateways/$GROUP/rgbw/$1  ;;	
+	hue) com="curl --data-binary '{\"status\":\"on\",\"hue\":$3,\"level\":$4}' -H 'Content-Type: application/json' -X PUT http://$IP/gateways/$GROUP/rgbw/$1  "
+eval $com ;; 
+	level) com="curl --data-binary '{\"level\":$3}' -H 'Content-Type: application/json' -X PUT http://$IP/gateways/$GROUP/rgbw/$1"
+eval $com ;; 
+	white)  curl --data-binary '{"command":"set_white"}' -H 'Content-Type: application/json' -X PUT http://$IP/gateways/$GROUP/rgbw/$1  ;;
+	red) curl --data-binary '{"status":"on","hue":0,"level":100}' -H 'Content-Type: application/json' -X PUT http://$IP/gateways/$GROUP/rgbw/$1  ;;
+	green) curl --data-binary '{"status":"on","hue":120,"level":100}' -H 'Content-Type: application/json' -X PUT http://$IP/gateways/$GROUP/rgbw/$1  ;;
+	blue) curl --data-binary '{"status":"on","hue":240,"level":100}' -H 'Content-Type: application/json' -X PUT http://$IP/gateways/$GROUP/rgbw/$1  ;;
+esac

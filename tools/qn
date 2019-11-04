@@ -1,0 +1,13 @@
+#! /bin/bash
+
+# date: 2018-09-03 - dott
+# description: quick way to make notes
+
+notefile="/home/dott/docs/quicknotes.txt"
+date="1"
+dateformat="%d %b %Y - %H:%M"
+if [ "$date" = "1" ]; then
+	date +"$dateformat" >> $notefile
+fi
+echo "$@" >> $notefile
+echo " " >> $notefile

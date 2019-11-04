@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# date: 2018-08-29 - dott
+# records screen
+
+if [ $# -eq 0 ]
+then
+filename="/tmp/screencast.mp4"
+else
+filename=$1
+fi
+
+ffmpeg -f x11grab -r 25 -s $(xrandr| grep '*' | tr -s " " | cut -d' ' -f2) -i :0.0 -c:v libx264 $filename

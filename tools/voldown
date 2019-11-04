@@ -1,0 +1,1 @@
+amixer sset Master 5%- unmute  | grep Right | grep % | cut -d[ -f2 | cut -d] -f1 | aosd_cat --fore-color='#dfe2e8' -p 7 --x-offset=0 --y-offset=-400 --font='bitstream bold 20' --transparency=1 --fade-full=100

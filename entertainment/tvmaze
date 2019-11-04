@@ -1,0 +1,66 @@
+#!/bin/bash
+
+seriesfile="/home/dott/.config/tvmazeseries"
+episodesfile="/home/dott/.config/tvepisodes"
+cd /tmp
+
+ser_update () {
+while read line 
+do
+name=$( echo $line | cut -d'#' -f2)
+ser=$( echo $line | cut -d ' ' -f1)
+wget -q -O- "https://api.tvmaze.com/shows/$ser/episodes" > serjson
+cat serjson | jq -r '.[] | .name' > sernames
+cat serjson | jq -r '.[] | .airdate' > serdate
+cat serjson | jq -r '.[] | .season' | sed -e 's/$/\//' > serseason
+cat serjson | jq -r '.[] | .number' | sed -e 's/$/ '"$name"' -/' > sernumber
+paste -d '' serseason sernumber > sernumname
+paste -d ' ' serdate sernumname sernames >> fullepisodelist 
+done < $( echo $seriesfile)
+rm sernames serdate serseason sernumber sernumname serjson
+cat fullepisodelist | sort -d | grep "2019-" > $episodesfile
+rm fullepisodelist
+}
+
+ser_addnum () {
+sername=$(wget -q -O- "https://api.tvmaze.com/shows/$1" | jq -r '.name')
+echo -e "$1\t#$sername" >> $seriesfile
+}
+
+ser_search () {
+serarg=$( echo $@ | sed -r 's/ /%20/g')
+wget -q -O- "https://api.tvmaze.com/singlesearch/shows?q=$serarg" | jq -r '.[] ' | head -3
+}
+
+ser_3 () {
+yesterday=$( cat $episodesfile | grep $( date +%Y-%m-%d -d "-1 day")) 
+if [ -n "$yesterday" ]
+then
+echo "yesterday:"
+echo "$yesterday" | cut -d' ' -f2-
+fi
+
+today=$( cat $episodesfile | grep $( date +%Y-%m-%d )) 
+if [ -n "$today" ]
+then
+echo "today:"
+echo "$today" | cut -d' ' -f2-
+fi
+
+tomorrow=$( cat $episodesfile | grep $( date +%Y-%m-%d -d "+1 day")) 
+if [ -n "$tomorrow" ]
+then
+echo "tomorrow"
+echo "$tomorrow" | cut -d' ' -f2-
+fi
+}
+
+if [ -n "$1" ] 
+then
+	case "$1" in
+		search) ser_search ${@:2} ;;
+		add) ser_addnum $2 ;;
+	esac
+else 
+ser_3
+fi
