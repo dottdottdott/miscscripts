@@ -1,7 +1,0 @@
-#!/bin/bash
-
-cd /tmp
-link=$(wget -q -O- https://www.chemnitz.de/chemnitz/de/aktuell/publikationen/amtsblatt/index.itl |  grep pdf | sed 's/<br>/\n<br>/g' | grep pdf | head -1 | cut -d'"' -f 2)
-wget -q https://www.chemnitz.de$link
-file=$(echo $link | cut -d'/' -f7)
-mupdf $file && rm $file

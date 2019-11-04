@@ -1,3 +1,0 @@
-#!/bin/sh
-
-mpsyt ".$@ tailer, 1, q"
