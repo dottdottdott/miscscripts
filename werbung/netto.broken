@@ -2,7 +2,7 @@
 
 cd /tmp
 curl --cookie-jar nettocookie --cookie nettocookie --output /dev/null  https://www.netto-online.de/index.php/page/set_store_redirect_site/1798
-adress=$(curl --cookie nettocookie https://www.netto-online.de/Online-Prospekte.chtm | grep "Filial-Angebote" -A6 | grep pdf | cut -d'"' -f16)
+adress=$(curl --cookie nettocookie https://www.netto-online.de/ueber-netto/Online-Prospekte.chtm | grep "Filial-Angebote" -A6 | grep pdf | cut -d'"' -f16)
 wget "https://www.netto-online.de/$adress"
 pdffile=$(echo $adress | cut -d'/' -f6) 
 mupdf $pdffile && rm $pdffile

@@ -60,6 +60,7 @@ then
 	case "$1" in
 		search) ser_search ${@:2} ;;
 		add) ser_addnum $2 ;;
+		update) ser_update ;;
 	esac
 else 
 ser_3
