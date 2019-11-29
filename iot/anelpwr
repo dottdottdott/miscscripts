@@ -1,5 +1,5 @@
 #!/bin/bash
-IP="192.168.1.113" #replace with anel pwrctrl IP
+IP="192.168.1.200" #replace with anel pwrctrl IP
 case "$2" in
 	off) curl -X GET http://$IP/?Sw_off=$1,AAoIBQ8PCwkN  ;;	
 	on) curl -X GET http://$IP/?Sw_on=$1,AAoIBQ8PCwkN  ;;	
