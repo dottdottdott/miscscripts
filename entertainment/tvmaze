@@ -18,7 +18,7 @@ paste -d '' serseason sernumber > sernumname
 paste -d ' ' serdate sernumname sernames >> fullepisodelist 
 done < $( echo $seriesfile)
 rm sernames serdate serseason sernumber sernumname serjson
-cat fullepisodelist | sort -d | grep "2019-" > $episodesfile
+cat fullepisodelist | sort -d | grep "2020-" > $episodesfile
 rm fullepisodelist
 }
 
