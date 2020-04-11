@@ -22,6 +22,24 @@ cat fullepisodelist | sort -d | grep "2020-" > $episodesfile
 rm fullepisodelist
 }
 
+ser_check_running () {
+while read line
+do
+name=$( echo $line | cut -d'#' -f2)
+ser=$( echo $line | cut -d ' ' -f1)
+running=$(wget -q -O- "https://api.tvmaze.com/shows/$ser" | jq -r '.status')
+if [ "$running" = "Ended" ] 
+then
+echo -e "\e[0;31m$name"
+elif [ "$running" = "Running" ]
+then
+echo -e "\e[0;38m$name"
+else
+echo -e "\e[0;33m$name"
+fi
+done < $( echo $seriesfile)
+}
+
 ser_addnum () {
 sername=$(wget -q -O- "https://api.tvmaze.com/shows/$1" | jq -r '.name')
 echo -e "$1\t#$sername" >> $seriesfile
@@ -61,6 +79,7 @@ then
 		search) ser_search ${@:2} ;;
 		add) ser_addnum $2 ;;
 		update) ser_update ;;
+		check) ser_check_running ;;
 	esac
 else 
 ser_3
