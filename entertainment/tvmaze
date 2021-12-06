@@ -18,7 +18,7 @@ paste -d '' serseason sernumber > sernumname
 paste -d ' ' serdate sernumname sernames >> fullepisodelist 
 done < $( echo $seriesfile)
 rm sernames serdate serseason sernumber sernumname serjson
-cat fullepisodelist | sort -d | grep "2020-" > $episodesfile
+cat fullepisodelist | sort -d | grep "$(date +"%Y-")" > $episodesfile
 rm fullepisodelist
 }
 
@@ -73,6 +73,13 @@ echo "$tomorrow" | cut -d' ' -f2-
 fi
 }
 
+ser_next_10 () {
+cat $episodesfile > /tmp/epfile
+date +"%Y-%m-%d - THISISNOW" >> /tmp/epfile
+cat /tmp/epfile | sort -d | grep "THISISNOW" -A11 | tail -n +2 
+rm /tmp/epfile
+}
+
 if [ -n "$1" ] 
 then
 	case "$1" in
@@ -80,6 +87,7 @@ then
 		add) ser_addnum $2 ;;
 		update) ser_update ;;
 		check) ser_check_running ;;
+		next) ser_next_10 ;;
 	esac
 else 
 ser_3
