@@ -1,8 +1,7 @@
 #!/bin/bash
 
-seriesfile="/home/dott/.config/tvmazeseries"
-episodesfile="/home/dott/.config/tvepisodes"
-cd /tmp
+seriesfile="$HOME/.config/tvmazeseries"
+episodesfile="$HOME/.config/tvepisodes"
 
 ser_update () {
 while read line 
