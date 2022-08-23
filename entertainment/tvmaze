@@ -73,10 +73,18 @@ fi
 }
 
 ser_next_10 () {
-cat $episodesfile > /tmp/epfile
-date +"%Y-%m-%d - THISISNOW" >> /tmp/epfile
-cat /tmp/epfile | sort -d | grep "THISISNOW" -A11 | tail -n +2 
-rm /tmp/epfile
+cat $episodesfile > epfile
+date +"%Y-%m-%d - THISISNOW" >> epfile
+cat epfile | sort -d | grep "THISISNOW" -A11 | tail -n +2 
+rm epfile
+}
+
+ser_around_10 () {
+cat $episodesfile > epfile
+date +"%Y-%m-%d - THISISNOW" >> epfile
+cat epfile | sort -d | grep "THISISNOW" -B11 | tail -n +2 
+cat epfile | sort -d | grep "THISISNOW" -A11 | tail -n +2 
+rm epfile
 }
 
 if [ -n "$1" ] 
@@ -87,6 +95,7 @@ then
 		update) ser_update ;;
 		check) ser_check_running ;;
 		next) ser_next_10 ;;
+		around) ser_around_10 ;;
 	esac
 else 
 ser_3
